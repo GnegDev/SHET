@@ -1,0 +1,7 @@
+FROM python:latest
+WORKDIR /SHET
+COPY requirements.txt /SHET
+RUN pip3 install --upgrade pip -r requirements.txt
+COPY . /SHET
+EXPOSE 27017 27017
+CMD python3 ./main.py
