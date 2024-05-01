@@ -15,6 +15,8 @@ def updateInfoHandler(callback: CallbackQuery, bot: TeleBot):
     commandsHandlers.startHandler(message, bot)
 
 def getExercises(callback: CallbackQuery, bot: TeleBot):
+    # TODO: добавить норм апи, щас нерабочая функция
+    
     message = callback.message
     bot.send_message(message.chat.id, text="глып")
 
