@@ -1,4 +1,5 @@
-import requests
+from yandexgptlite import YandexGPTLite
+
 from telebot import TeleBot
 from telebot.types import CallbackQuery
 
@@ -6,6 +7,8 @@ from Bot import config
 from Bot.handlers import commandsHandlers
 
 from Tools import mdbHandler
+
+yandexgptClient = YandexGPTLite(config.YANDEX_CLOUD_ID, config.YANDEXGPT_TOKEN)
 
 def updateInfoHandler(callback: CallbackQuery, bot: TeleBot):
     # лютый костылище
@@ -15,27 +18,13 @@ def updateInfoHandler(callback: CallbackQuery, bot: TeleBot):
     commandsHandlers.startHandler(message, bot)
 
 def getExercises(callback: CallbackQuery, bot: TeleBot):
-    # TODO: добавить норм апи, щас нерабочая функция
-    
     message = callback.message
-    bot.send_message(message.chat.id, text="глып")
+    bot.send_message(message.chat.id, text="Подбираю...")
 
     userInfo = mdbHandler.getUserInfo(callback.from_user.id)
     bmi = userInfo["bmi"]
     bmr = userInfo["bmr"]
 
-    headers = {
-        'Authorization': f'Bearer {config.YANDEXGPT_TOKEN}',
-        'Content-Type': 'application/json'
-    }
+    response = yandexgptClient.create_completion(f"Подобрать упражнения для ИМТ {bmi} и калорийности {bmr}.", 0.5)
 
-    data = {
-        'query': f'Подобрать упражнения для ИМТ {bmi} и калорийности {bmr}'
-    }
-
-    response = requests.post('https://api.aicloud.sbercloud.ru/public/v1/public_inference/gpt-3.5-turbo', headers=headers, json=data)
-    #exercises = response.json()['replies'][0]['text']
-
-    print(response)
-
-    #bot.send_message(message.chat.id, text=exercises)
+    bot.send_message(message.chat.id, text=response)
