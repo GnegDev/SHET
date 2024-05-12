@@ -19,9 +19,7 @@ def updateInfoHandler(callback: CallbackQuery, bot: TeleBot):
 
 def switchExercises(callback: CallbackQuery, bot: TeleBot):
     message = callback.message
-    print("Switching...")
     mdbHandler.switchExercises(callback.from_user.id)
-    print("Switched.")
     userInfo = mdbHandler.getUserInfo(callback.from_user.id)
 
     weight = userInfo["weight"]
