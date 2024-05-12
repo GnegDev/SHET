@@ -15,5 +15,5 @@ def menuHandler(message: Message, bot: TeleBot):
     bmi = userInfo["bmi"]
     bmr = userInfo["bmr"]
 
-    bot.send_message(message.chat.id, text=f"{message.from_user.full_name}\n\nВес: {weight} кг\nРост: {height} см\nИМТ: {bmi}\nРекомендуемая калорийность: {bmr} ккал", reply_markup=keyboardBuilder.buildKeyboard())
+    bot.send_message(message.chat.id, text=f"{message.from_user.full_name}\n\nВес: {weight} кг\nРост: {height} см\nИМТ: {bmi}\nРекомендуемая калорийность: {bmr} ккал", reply_markup=keyboardBuilder.buildKeyboard(message.from_user.id))
 
