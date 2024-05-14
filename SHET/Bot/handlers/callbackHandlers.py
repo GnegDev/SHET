@@ -27,9 +27,7 @@ def switchExercises(callback: CallbackQuery, bot: TeleBot):
     bmi = userInfo["bmi"]
     bmr = userInfo["bmr"]
 
-    print("Editing...")
     bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text=f"{callback.from_user.full_name}\n\nВес: {weight} кг\nРост: {height} см\nИМТ: {bmi}\nРекомендуемая калорийность: {bmr} ккал", reply_markup=keyboardBuilder.buildKeyboard(callback.from_user.id))
-    print("Edited.")
 
 def getExercises(callback: CallbackQuery, bot: TeleBot):
     message = callback.message
